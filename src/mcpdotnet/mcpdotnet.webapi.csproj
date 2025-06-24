@@ -12,7 +12,7 @@
   <PropertyGroup>
     
     <!-- Assembly properties -->
-    <Version>$(VersionPrefix)1.0.13</Version>
+    <Version>$(VersionPrefix)1.1.0</Version>
     <RootNamespace>McpDotNet</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
