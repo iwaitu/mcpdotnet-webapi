@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>Latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisMode>All</AnalysisMode>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    
+    <!-- Assembly properties -->
+    <Version>$(VersionPrefix)1.0.13</Version>
+    <RootNamespace>McpDotNet</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AssemblyName>Ivilson.McpDotNet.Webapi</AssemblyName>
+    <!-- license and package properties -->
+    <PackageId>ivilson.mcpdotnet.webapi</PackageId>
+    <Authors>Ivilson</Authors>
+    <Description>.NET library for the Model Context Protocol (MCP)</Description>
+    <PackageProjectUrl>https://github.com/iwaitu/mcpdotnet-webapi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/iwaitu/mcpdotnet-webapi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mcp;ai;ModelContextProtocol;llm</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="/" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="McpDotNet.Tests" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" Version="9.6.0" />
+    <PackageReference Include="Microsoft.Extensions.AI" Version="9.6.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <Compile Include="..\Common\Polyfills\**\*.cs" />
+    <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.6" />
+    <PackageReference Include="System.Text.Json" Version="9.0.6" />
+    <PackageReference Include="System.Threading.Channels" Version="9.0.6" />
+  </ItemGroup>
+
+</Project>
