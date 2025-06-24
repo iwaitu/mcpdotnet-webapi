@@ -1,5 +1,13 @@
 # McpDotNet WebAPI
 
+
+[![GitHub stars](https://img.shields.io/github/stars/iwaitu/mcpdotnet-webapi?style=social)](https://github.com/iwaitu/mcpdotnet-webapi/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/iwaitu/mcpdotnet-webapi?style=social)](https://github.com/iwaitu/mcpdotnet-webapi/network)
+[![GitHub issues](https://img.shields.io/github/issues/iwaitu/mcpdotnet-webapi)](https://github.com/iwaitu/mcpdotnet-webapi/issues)
+[![GitHub license](https://img.shields.io/github/license/iwaitu/mcpdotnet-webapi)](https://github.com/iwaitu/mcpdotnet-webapi/blob/main/LICENSE)
+[![Last commit](https://img.shields.io/github/last-commit/iwaitu/mcpdotnet-webapi)](https://github.com/iwaitu/mcpdotnet-webapi/commits/main)
+[![.NET](https://img.shields.io/badge/.NET-7.0-blueviolet)](https://dotnet.microsoft.com/)
+
 本项目基于 [https://github.com/PederHP/mcpdotnet](https://github.com/PederHP/mcpdotnet) 开发，特此感谢原作者的开源贡献。
 
 ## 简介
