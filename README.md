@@ -1,14 +1,127 @@
 # McpDotNet WebAPI
 
-±¾ÏîÄ¿»ùÓÚ [https://github.com/PederHP/mcpdotnet](https://github.com/PederHP/mcpdotnet) ¿ª·¢£¬ÌØ´Ë¸ĞĞ»Ô­×÷ÕßµÄ¿ªÔ´¹±Ï×¡£
+æœ¬é¡¹ç›®åŸºäº [https://github.com/PederHP/mcpdotnet](https://github.com/PederHP/mcpdotnet) å¼€å‘ï¼Œç‰¹æ­¤æ„Ÿè°¢åŸä½œè€…çš„å¼€æºè´¡çŒ®ã€‚
 
-## ¼ò½é
+## ç®€ä»‹
 
-±¾¿âÎª Model Context Protocol (MCP) µÄ .NET ÊµÏÖ£¬ÊÊÓÃÓÚ AI¡¢LLM µÈÏà¹Ø³¡¾°¡£
+æœ¬åº“ä¸º Model Context Protocol (MCP) çš„ .NET å®ç°ï¼Œé€‚ç”¨äº AIã€LLM ç­‰ç›¸å…³åœºæ™¯ã€‚
 
-## ÖÂĞ»
+## ä½¿ç”¨æ–¹æ³•
 
-¸ĞĞ» [PederHP/mcpdotnet](https://github.com/PederHP/mcpdotnet) ÏîÄ¿µÄÆô·¢Óë¹±Ï×¡£
+Demo å‚è€ƒ https://github.com/iwaitu/mcpwebapi 
+
+æœåŠ¡ç«¯ï¼š
+
+program.cs
+```
+using McpDotNet;
+using McpDotNet.Webapi;
+
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddMcpServer()
+    .WithHttpListenerSseServerTransport("testserver", 8100);
+
+
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// è¿™é‡Œå°†æ‰€æœ‰è¿”å›ç±»å‹ä¸ºé IActionResult çš„ public æ–¹æ³•æ³¨å†Œä¸º mcp æ–¹æ³•
+await app.UseMcpApiFunctions(typeof(Program).Assembly);
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+```
+
+æ§åˆ¶å™¨ä»£ç ï¼š
+
+```
+[McpToolType]
+[ApiController]
+[Route("[controller]")]
+public class WeatherForecastController : ControllerBase
+{
+    private static readonly string[] Summaries = new[]
+    {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
+    private readonly ILogger<WeatherForecastController> _logger;
+
+    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    {
+        _logger = logger;
+    }
+
+    [HttpGet(Name = "GetWeatherForecast")]
+    [McpTool, Description("è·å–å¤©æ°”æƒ…å†µ")]
+    public IEnumerable<WeatherForecast> Get([Description("åŸå¸‚åç§°")]string city)
+    {
+        return Enumerable.Range(1, 1).Select(index => new WeatherForecast
+        {
+            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)],
+            City = city
+        })
+        .ToArray();
+    }
+}
+```
+
+å®¢æˆ·ç«¯ä»£ç ï¼š
+
+```
+McpServerConfig serverConfig = new()
+{
+    Id = "everything",
+    Name = "Everything",
+    TransportType = TransportTypes.Sse,
+    Location = "http://localhost:3500/sse",
+};
+McpClientOptions clientOptions = new()
+{
+    ClientInfo = new() { Name = "SimpleToolsConsole", Version = "1.0.0" }
+};
+var mcpClient = await McpClientFactory.CreateAsync(serverConfig, clientOptions);
+var tools = await mcpClient.GetAIFunctionsAsync();
+
+var messages = new List<ChatMessage>
+    {
+        new ChatMessage(ChatRole.User, "ä½ æœ‰ä»€ä¹ˆèƒ½åŠ›ï¼Ÿ")
+    };
+var chatOptions = new ChatOptions
+{
+    Temperature = 0.5f,
+    Tools = tools.ToArray()
+};
+           
+var res = await _chatClient.GetResponseAsync(messages, chatOptions);
+return res.Messages.FirstOrDefault()?.Text;
+```
+
+## è‡´è°¢
+
+æ„Ÿè°¢ [PederHP/mcpdotnet](https://github.com/PederHP/mcpdotnet) é¡¹ç›®çš„å¯å‘ä¸è´¡çŒ®ã€‚
 
 ---
 
